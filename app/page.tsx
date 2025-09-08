@@ -1,103 +1,199 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React from 'react';
+import { motion } from 'framer-motion';
+import { FaArrowRight, FaLightbulb, FaUsers, FaCalendarAlt, FaMagic } from 'react-icons/fa';
+
+import Hero from './components/Hero';
+import Card from './ui/Card';
+
+export default function EnhancedLandingPage() {
+  const homeFiller = [
+    {
+      title: "Suggestions",
+      subTitle: "Your Voice Matters",
+      text: "Have an event idea? A doubt? Or just want to drop feedback? We're all ears. You're the reason we do what we do - and yes, you'll be heard. (Just give us a little time :))",
+      button: "Share Your Suggestion",
+      to: "/suggestions",
+      icon: FaLightbulb,
+    },
+    {
+      title: "About us",
+      subTitle: "Who We Are",
+      text: "We are a group of like-minded individuals from the Sambhram CS & IT technical community, brought together by a shared vision - to create a unified platform where we can showcase our work and keep you updated.",
+      button: "Know More",
+      to: "/about",
+      icon: FaUsers,
+    },
+  ];
+
+  const stats = [
+    { number: "50+", label: "Events Hosted", icon: FaCalendarAlt },
+    { number: "1000+", label: "Students Engaged", icon: FaUsers },
+    { number: "25+", label: "Industry Experts", icon: FaMagic },
+  ];
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
+      
+      {/* Hero Section */}
+      <Hero/>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Stats Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative py-20 bg-gradient-to-b from-black to-gray-950"
+      >
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{ scale: 1.05 }}
+                className="text-center p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-black/50 border border-red-500/20 hover:border-red-500/40 transition-all duration-300"
+              >
+                <stat.icon className="w-12 h-12 text-red-500 mx-auto mb-4" />
+                <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
+                <div className="text-gray-400">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </motion.section>
+
+      {/* Events Section */}
+      <section className="relative py-20 bg-gradient-to-b from-gray-950 to-black">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h3 className="text-red-500 text-sm uppercase tracking-wider mb-2">Events</h3>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">What's Up?</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card
+              title="Active Events"
+              imgPath="/api/placeholder/500/300"
+              btnType="Primary"
+              index={0}
+            />
+            <Card
+              title="Past Events"
+              imgPath="/api/placeholder/500/300"
+              btnType="Secondary"
+              index={1}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Dynamic Sections */}
+      {homeFiller.map((content, index) => (
+        <motion.section
+          key={index}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+          className={`relative py-20 ${
+            index % 2 === 0 
+              ? 'bg-gradient-to-br from-black via-gray-950 to-red-950/20' 
+              : 'bg-gradient-to-br from-gray-950 via-black to-gray-900'
+          }`}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
+              className="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 rounded-full mb-8"
+            >
+              <content.icon className="w-8 h-8 text-red-500" />
+            </motion.div>
+
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-red-500 text-sm uppercase tracking-wider mb-2"
+            >
+              {content.title}
+            </motion.h3>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-3xl md:text-5xl font-bold text-white mb-6"
+            >
+              {content.subTitle}
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-gray-300 text-lg leading-relaxed mb-10"
+            >
+              {content.text}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              <motion.a
+                href={content.to}
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 0 30px rgba(239, 68, 68, 0.5)"
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-xl transition-all duration-300 shadow-xl"
+              >
+                {content.button}
+                <FaArrowRight size={20} />
+              </motion.a>
+            </motion.div>
+          </div>
+
+          {/* Background Decoration */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <motion.div
+              animate={{ 
+                rotate: [0, 360],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ 
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className={`absolute w-96 h-96 border border-red-500/10 rounded-full ${
+                index % 2 === 0 ? '-top-48 -right-48' : '-bottom-48 -left-48'
+              }`}
+            />
+          </div>
+        </motion.section>
+      ))}
     </div>
   );
 }
