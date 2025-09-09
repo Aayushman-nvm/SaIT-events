@@ -6,10 +6,11 @@ interface CardProps {
   title: string;
   imgPath: string;
   btnType: string;
+  description:string;
   index?: number;
 }
 
-function Card({ title, imgPath, btnType, index = 0 }: CardProps) {
+function Card({ title, imgPath, btnType, description, index = 0 }: CardProps) {
   const isActive = title.includes('Active');
   
   return (
@@ -88,10 +89,7 @@ function Card({ title, imgPath, btnType, index = 0 }: CardProps) {
           transition={{ delay: 0.5 + index * 0.1 }}
           className="text-gray-300 mb-6 leading-relaxed"
         >
-          {isActive 
-            ? "Join our ongoing events and be part of the tech community. Network, learn, and grow with fellow developers."
-            : "Explore our collection of past events, workshops, and tech talks. Relive the moments and catch up on what you missed."
-          }
+          {description}
         </motion.p>
 
         {/* Action Button */}
