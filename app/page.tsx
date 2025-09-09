@@ -87,12 +87,14 @@ export default function EnhancedLandingPage() {
               title="Active Events"
               imgPath="/api/placeholder/500/300"
               btnType="Primary"
+              description="Join our ongoing events and be part of the tech community. Network, learn, and grow with fellow developers."
               index={0}
             />
             <Card
               title="Past Events"
               imgPath="/api/placeholder/500/300"
               btnType="Secondary"
+              description="Explore our collection of past events, workshops, and tech talks. Relive the moments and catch up on what you missed."
               index={1}
             />
           </div>
