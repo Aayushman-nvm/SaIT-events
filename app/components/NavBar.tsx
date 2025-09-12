@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoMenu } from "react-icons/io5";
 import { FaXmark } from "react-icons/fa6";
@@ -15,7 +16,7 @@ const navLinks = [
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = '/';
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {

@@ -145,7 +145,7 @@ function SuggestionsPage() {
                 value={userData.name}
                 onChange={(e) => setUserData((prev) => ({ ...prev, name: e.target.value }))}
                 placeholder="Your Name"
-                className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300 backdrop-blur-sm"
+                className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
                 required
               />
             </motion.div>
@@ -165,7 +165,7 @@ function SuggestionsPage() {
                 value={userData.email}
                 onChange={(e) => setUserData((prev) => ({ ...prev, email: e.target.value }))}
                 placeholder="example@gmail.com"
-                className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300 backdrop-blur-sm"
+                className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
                 required
               />
             </motion.div>
@@ -185,7 +185,7 @@ function SuggestionsPage() {
                 onChange={(e) => setUserData((prev) => ({ ...prev, request: e.target.value }))}
                 placeholder="Enter your suggestion, request or feedback here..."
                 rows={6}
-                className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300 backdrop-blur-sm resize-none"
+                className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300 resize-none"
                 required
               />
             </motion.div>
