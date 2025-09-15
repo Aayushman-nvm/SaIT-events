@@ -8,7 +8,6 @@ const initialForm = {
   description: '',
   poster: '',
   status: '',
-  assets: '',
   socialLink: '',
 };
 
@@ -24,18 +23,16 @@ function EventForm() {
     }));
   };
 
-  const { title, description, poster, status, assets, socialLink } = formData;
+  const { title, description, poster, status, socialLink } = formData;
 
   // Logic checks
   const isMainInfoFilled = title && description && poster;
   const isRadioSelected = status === 'ongoing' || status === 'upcoming';
   const isEventEnded = status === 'ended';
   const isSocialEnabled = isMainInfoFilled;
-  const isAssetsEnabled = isEventEnded;
   const isSubmitEnabled =
     isMainInfoFilled &&
     (isRadioSelected || isEventEnded) &&
-    (isEventEnded ? assets : true) &&
     (isSocialEnabled ? socialLink : true);
 
   const handleSubmit = async () => {
@@ -179,36 +176,6 @@ function EventForm() {
                 </p>
               </motion.div>
             )}
-          </motion.div>
-
-          {/* Assets Field - Only enabled if event ended */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="relative group"
-          >
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Assets (Photos/Videos)
-              {!isAssetsEnabled && <span className="text-xs text-gray-500 ml-2">(Only for ended events)</span>}
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <FaCamera className={`h-5 w-5 ${isAssetsEnabled ? 'text-red-500' : 'text-gray-600'}`} />
-              </div>
-              <input
-                placeholder="Upload photos and videos..."
-                name="assets"
-                value={assets}
-                onChange={handleChange}
-                disabled={!isAssetsEnabled}
-                className={`w-full pl-12 pr-4 py-3 border rounded-xl transition-all duration-300 ${
-                  isAssetsEnabled
-                    ? 'bg-gray-800/50 border-gray-600 text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none'
-                    : 'bg-gray-900/50 border-gray-700 text-gray-500 placeholder-gray-600 cursor-not-allowed'
-                }`}
-              />
-            </div>
           </motion.div>
 
           {/* Social Link Field - Enabled when main info is filled */}
