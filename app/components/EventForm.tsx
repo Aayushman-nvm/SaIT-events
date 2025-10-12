@@ -36,12 +36,21 @@ function EventForm() {
     (isSocialEnabled ? socialLink : true);
 
   const handleSubmit = async () => {
-    setIsSubmitting(true);
+    
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    alert('Event created successfully!');
-    setIsSubmitting(false);
-    // Submit to backend or something
+    try {
+      setIsSubmitting(true);
+      const res=await fetch("/api/events",{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+      console.log("Res: ",res);
+      alert('Event created successfully!');
+      setIsSubmitting(false);
+    } catch (error) {
+      setIsSubmitting(false);
+    }
   };
 
   const statusOptions = [
