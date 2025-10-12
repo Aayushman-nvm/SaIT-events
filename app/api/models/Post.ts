@@ -5,6 +5,7 @@ const postSchema=new mongoose.Schema({
     description:String,
     posterUrl:String,
     status:String,
+    socialLink:String,
 });
 
 const Post= mongoose.model("Post", postSchema);
