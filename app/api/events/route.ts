@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
-import {createPost} from "../lib/post";
+import {createPost} from "../controllers/post";
+import connectDB from "../lib/dbConnection";
 // event get post etc routes
 export async function POST(req:Request) {
+    await connectDB();
     const body = await req.json();
     console.log("Body: ", body);
     try {
