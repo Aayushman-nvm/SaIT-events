@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import {createPost} from "../controllers/post";
+import {createPost, allPosts} from "../controllers/post";
 import connectDB from "../lib/dbConnection";
 // event get post etc routes
 export async function POST(req:Request) {
@@ -16,6 +16,14 @@ export async function POST(req:Request) {
     //posting events
 }
 
-export async function GET(req:Request) {
-    //getting events in frontend
+export async function GET(req: Request) {
+    await connectDB(); // Assuming this works as expected
+    try {
+        const result = await allPosts();
+        console.log("All posts: ", result);
+        return result; // Make sure you're returning the result of allPosts
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500 });
+    }
 }
