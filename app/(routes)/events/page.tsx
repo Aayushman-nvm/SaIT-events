@@ -1,12 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { FaCalendarAlt, FaArchive } from "react-icons/fa";
 import Card from "../../ui/Card";
 import Background from "./component/Background";
 
 function Page() {
-  const eventsContainer = [
+  type Event = {
+    title: string;
+    description: string;
+    posterUrl: string;
+    status: "ongoing" | "ended" | "upcoming";
+    socialLink: string;
+  };
+  const [events, setEvents] = useState<Event[]>([]);
+  /*const eventsContainer = [
     {
       title: "1st event",
       path: "/images/background.jpg",
@@ -31,14 +40,31 @@ function Page() {
       description: "4th event description",
       status: "Inactive",
     },
-  ];
+  ];*/
 
-  const activeEvents = eventsContainer.filter(
-    (event) => event.status === "Active"
+  async function getPosts() {
+    try {
+      const result = await fetch("/api/events");
+      if (!result.ok) {
+        throw new Error("Failed to fetch posts");
+      }
+      const posts = await result.json();
+      setEvents(posts);
+      console.log(posts);
+    } catch (error) {
+      console.log("Error fetching posts:", error);
+    }
+  }
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const activeEvents = events.filter((event) =>
+    ["ongoing", "upcoming"].includes(event.status)
   );
-  const pastEvents = eventsContainer.filter(
-    (event) => event.status === "Inactive"
-  );
+
+  const pastEvents = events.filter((event) => event.status === "ended");
 
   return (
     <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
@@ -108,7 +134,7 @@ function Page() {
                 >
                   <Card
                     title={event.title}
-                    imgPath={event.path}
+                    imgPath={event.posterUrl}
                     btnType="Primary"
                     description={event.description}
                     index={index}
@@ -181,7 +207,7 @@ function Page() {
                 >
                   <Card
                     title={event.title}
-                    imgPath={event.path}
+                    imgPath={event.posterUrl}
                     btnType="Secondary"
                     description={event.description}
                     index={index}
