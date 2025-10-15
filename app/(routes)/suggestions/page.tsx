@@ -21,7 +21,7 @@ function SuggestionsPage() {
     console.log("Request: ", userData.request);
   }, [userData]);
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
