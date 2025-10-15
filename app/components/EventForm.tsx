@@ -1,23 +1,25 @@
 "use client";
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaImage, FaLink, FaCheck } from 'react-icons/fa';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { FaCalendarAlt, FaImage, FaLink, FaCheck } from "react-icons/fa";
 
 const initialForm = {
-  title: '',
-  description: '',
-  info: '',
-  poster: '',
-  registrationLink: '',
-  status: '',
-  socialLink: '',
+  title: "",
+  description: "",
+  info: "",
+  poster: "",
+  registrationLink: "",
+  status: "",
+  socialLink: "",
 };
 
 function EventForm() {
   const [formData, setFormData] = useState(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -25,10 +27,25 @@ function EventForm() {
     }));
   };
 
-  const { title, description, info, poster, registrationLink, status, socialLink } = formData;
+  const {
+    title,
+    description,
+    info,
+    poster,
+    registrationLink,
+    status,
+    socialLink,
+  } = formData;
 
   // Logic checks - all fields must be filled
-  const isSubmitEnabled = title && description && info && poster && registrationLink && status && socialLink;
+  const isSubmitEnabled =
+    title &&
+    description &&
+    info &&
+    poster &&
+    registrationLink &&
+    status &&
+    socialLink;
 
   const handleSubmit = async () => {
     // Simulate API call
@@ -40,7 +57,7 @@ function EventForm() {
         body: JSON.stringify(formData),
       });
       console.log("Res: ", res);
-      alert('Event created successfully!');
+      alert("Event created successfully!");
       setIsSubmitting(false);
     } catch (error) {
       setIsSubmitting(false);
@@ -48,13 +65,21 @@ function EventForm() {
   };
 
   const statusOptions = [
-    { value: 'ongoing', label: 'Ongoing', color: 'text-green-400 border-green-400' },
-    { value: 'upcoming', label: 'Upcoming', color: 'text-blue-400 border-blue-400' },
-    { value: 'ended', label: 'Ended', color: 'text-gray-400 border-gray-400' }
+    {
+      value: "ongoing",
+      label: "Ongoing",
+      color: "text-green-400 border-green-400",
+    },
+    {
+      value: "upcoming",
+      label: "Upcoming",
+      color: "text-blue-400 border-blue-400",
+    },
+    { value: "ended", label: "Ended", color: "text-gray-400 border-gray-400" },
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -63,7 +88,9 @@ function EventForm() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
           <FaCalendarAlt className="w-6 h-6 text-red-500" />
-          <h2 className="text-2xl md:text-3xl font-bold text-white">Create Event</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-white">
+            Create Event
+          </h2>
         </div>
         <div className="w-16 h-1 bg-gradient-to-r from-red-500 to-red-600 rounded-full" />
       </div>
@@ -77,7 +104,9 @@ function EventForm() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="relative"
           >
-            <label className="block text-sm font-medium text-gray-300 mb-2">Event Title</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Event Title
+            </label>
             <input
               placeholder="Enter event title..."
               name="title"
@@ -93,7 +122,9 @@ function EventForm() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Description
+            </label>
             <textarea
               placeholder="Abstract description of your event..."
               name="description"
@@ -110,7 +141,9 @@ function EventForm() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <label className="block text-sm font-medium text-gray-300 mb-2">Event Information</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Event Information
+            </label>
             <textarea
               placeholder="Give detail info of your event..."
               name="info"
@@ -127,7 +160,9 @@ function EventForm() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="relative group"
           >
-            <label className="block text-sm font-medium text-gray-300 mb-2">Poster URL</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Poster URL
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <FaImage className="h-5 w-5 text-red-500" />
@@ -148,7 +183,9 @@ function EventForm() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="relative group"
           >
-            <label className="block text-sm font-medium text-gray-300 mb-2">Registration Link</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Registration Link
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <FaLink className="h-5 w-5 text-red-500" />
@@ -171,7 +208,9 @@ function EventForm() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <label className="block text-sm font-medium text-gray-300 mb-4">Event Status</label>
+            <label className="block text-sm font-medium text-gray-300 mb-4">
+              Event Status
+            </label>
             <div className="space-y-3">
               {statusOptions.map((option) => (
                 <label
@@ -179,7 +218,7 @@ function EventForm() {
                   className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all duration-300 hover:bg-gray-800/30 ${
                     status === option.value
                       ? `${option.color} bg-gray-800/50`
-                      : 'border-gray-600 text-gray-300'
+                      : "border-gray-600 text-gray-300"
                   }`}
                 >
                   <input
@@ -190,9 +229,11 @@ function EventForm() {
                     onChange={handleChange}
                     className="sr-only"
                   />
-                  <div className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
-                    status === option.value ? option.color : 'border-gray-600'
-                  }`}>
+                  <div
+                    className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
+                      status === option.value ? option.color : "border-gray-600"
+                    }`}
+                  >
                     {status === option.value && (
                       <motion.div
                         initial={{ scale: 0 }}
@@ -205,7 +246,7 @@ function EventForm() {
                 </label>
               ))}
             </div>
-            
+
             {status && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -213,7 +254,8 @@ function EventForm() {
                 className="mt-4 p-3 bg-gray-800/30 border border-gray-700 rounded-lg"
               >
                 <p className="text-sm text-gray-400">
-                  Selected Status: <span className="text-white font-medium">{status}</span>
+                  Selected Status:{" "}
+                  <span className="text-white font-medium">{status}</span>
                 </p>
               </motion.div>
             )}
@@ -226,7 +268,9 @@ function EventForm() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="relative group"
           >
-            <label className="block text-sm font-medium text-gray-300 mb-2">Social Post Link</label>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Social Post Link
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <FaLink className="h-5 w-5 text-red-500" />
@@ -239,7 +283,9 @@ function EventForm() {
                 className="w-full pl-12 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
               />
             </div>
-            <p className="text-sm text-gray-400 mt-2">Social posts: logo with link</p>
+            <p className="text-sm text-gray-400 mt-2">
+              Social posts: logo with link
+            </p>
           </motion.div>
         </div>
       </div>
@@ -254,17 +300,20 @@ function EventForm() {
         <motion.button
           onClick={handleSubmit}
           disabled={!isSubmitEnabled || isSubmitting}
-          whileHover={{ 
+          whileHover={{
             scale: isSubmitEnabled && !isSubmitting ? 1.05 : 1,
-            boxShadow: isSubmitEnabled && !isSubmitting ? "0 0 30px rgba(239, 68, 68, 0.5)" : "none"
+            boxShadow:
+              isSubmitEnabled && !isSubmitting
+                ? "0 0 30px rgba(239, 68, 68, 0.5)"
+                : "none",
           }}
           whileTap={{ scale: isSubmitEnabled && !isSubmitting ? 0.95 : 1 }}
           className={`inline-flex items-center gap-3 px-12 py-4 font-semibold rounded-xl transition-all duration-300 shadow-xl ${
             isSubmitting
-              ? 'bg-gray-600 text-gray-300 cursor-not-allowed'
+              ? "bg-gray-600 text-gray-300 cursor-not-allowed"
               : isSubmitEnabled
-              ? 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white'
-              : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+              ? "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
+              : "bg-gray-700 text-gray-400 cursor-not-allowed"
           }`}
         >
           {isSubmitting ? (
