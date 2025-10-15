@@ -78,7 +78,7 @@ export default function EnhancedLandingPage() {
             className="text-center mb-16"
           >
             <h3 className="text-red-500 text-sm uppercase tracking-wider mb-2">Events</h3>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">What's Up?</h2>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">What&apos;s Up?</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
           </motion.div>
 

@@ -92,7 +92,7 @@ function Hero() {
                 transition={{ duration: 0.8, delay: 0.8 }}
                 className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-500 to-red-600"
               >
-                Sambhram's
+                Sambhram&apos;s
               </motion.span>
               <br />
               <motion.span
