@@ -24,8 +24,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ success: false }, { status: 401 });
-  } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message }), {
+  } catch (error) {
+    return new Response(JSON.stringify({ error }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
