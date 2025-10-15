@@ -1,12 +1,14 @@
 "use client";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCalendarAlt, FaImage, FaLink, FaCamera, FaCheck } from 'react-icons/fa';
+import { FaCalendarAlt, FaImage, FaLink, FaCheck } from 'react-icons/fa';
 
 const initialForm = {
   title: '',
   description: '',
+  info: '',
   poster: '',
+  registrationLink: '',
   status: '',
   socialLink: '',
 };
@@ -23,29 +25,21 @@ function EventForm() {
     }));
   };
 
-  const { title, description, poster, status, socialLink } = formData;
+  const { title, description, info, poster, registrationLink, status, socialLink } = formData;
 
-  // Logic checks
-  const isMainInfoFilled = title && description && poster;
-  const isRadioSelected = status === 'ongoing' || status === 'upcoming';
-  const isEventEnded = status === 'ended';
-  const isSocialEnabled = isMainInfoFilled;
-  const isSubmitEnabled =
-    isMainInfoFilled &&
-    (isRadioSelected || isEventEnded) &&
-    (isSocialEnabled ? socialLink : true);
+  // Logic checks - all fields must be filled
+  const isSubmitEnabled = title && description && info && poster && registrationLink && status && socialLink;
 
   const handleSubmit = async () => {
-    
     // Simulate API call
     try {
       setIsSubmitting(true);
-      const res=await fetch("/api/events",{
+      const res = await fetch("/api/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      })
-      console.log("Res: ",res);
+      });
+      console.log("Res: ", res);
       alert('Event created successfully!');
       setIsSubmitting(false);
     } catch (error) {
@@ -101,11 +95,28 @@ function EventForm() {
           >
             <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
             <textarea
-              placeholder="Describe your event..."
+              placeholder="Abstract description of your event..."
               name="description"
               value={description}
               onChange={handleChange}
               rows={4}
+              className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300 resize-none"
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative"
+          >
+            <label className="block text-sm font-medium text-gray-300 mb-2">Event Information</label>
+            <textarea
+              placeholder="Give detail info of your event..."
+              name="info"
+              value={info}
+              onChange={handleChange}
+              rows={5}
               className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300 resize-none"
             />
           </motion.div>
@@ -125,6 +136,27 @@ function EventForm() {
                 placeholder="https://example.com/poster.jpg"
                 name="poster"
                 value={poster}
+                onChange={handleChange}
+                className="w-full pl-12 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="relative group"
+          >
+            <label className="block text-sm font-medium text-gray-300 mb-2">Registration Link</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <FaLink className="h-5 w-5 text-red-500" />
+              </div>
+              <input
+                placeholder="https://registration-link.com"
+                name="registrationLink"
+                value={registrationLink}
                 onChange={handleChange}
                 className="w-full pl-12 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
               />
@@ -187,30 +219,28 @@ function EventForm() {
             )}
           </motion.div>
 
-          {/* Social Link Field - Enabled when main info is filled */}
-          {isSocialEnabled && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="relative group"
-            >
-              <label className="block text-sm font-medium text-gray-300 mb-2">Social Post Link</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <FaLink className="h-5 w-5 text-red-500" />
-                </div>
-                <input
-                  placeholder="https://social-platform.com/post"
-                  name="socialLink"
-                  value={socialLink}
-                  onChange={handleChange}
-                  className="w-full pl-12 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
-                />
+          {/* Social Link Field */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="relative group"
+          >
+            <label className="block text-sm font-medium text-gray-300 mb-2">Social Post Link</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <FaLink className="h-5 w-5 text-red-500" />
               </div>
-              <p className="text-sm text-gray-400 mt-2">Social posts: logo with link</p>
-            </motion.div>
-          )}
+              <input
+                placeholder="https://social-platform.com/post"
+                name="socialLink"
+                value={socialLink}
+                onChange={handleChange}
+                className="w-full pl-12 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
+              />
+            </div>
+            <p className="text-sm text-gray-400 mt-2">Social posts: logo with link</p>
+          </motion.div>
         </div>
       </div>
 
