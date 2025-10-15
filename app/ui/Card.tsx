@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaCalendar, FaUsers } from "react-icons/fa";
+import {Types} from 'mongoose';
 
 interface CardProps {
+  id?:Types.ObjectId;
   title: string;
   imgPath: string;
   btnType: string;
@@ -10,7 +12,7 @@ interface CardProps {
   index?: number;
 }
 
-function Card({ title, imgPath, btnType, description, index = 0 }: CardProps) {
+function Card({ id, title, imgPath, btnType, description, index = 0 }: CardProps) {
   const isActive = title.includes('Active');
   
   return (
@@ -93,7 +95,7 @@ function Card({ title, imgPath, btnType, description, index = 0 }: CardProps) {
         </motion.p>
 
         {/* Action Button */}
-        <motion.button
+        <motion.a
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 + index * 0.1 }}
@@ -107,6 +109,7 @@ function Card({ title, imgPath, btnType, description, index = 0 }: CardProps) {
               ? "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg"
               : "bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white shadow-lg"
           }`}
+          href={id?`/events/${id}`:"/events"}
         >
           <span>Explore Now</span>
           <motion.div
@@ -115,7 +118,7 @@ function Card({ title, imgPath, btnType, description, index = 0 }: CardProps) {
           >
             <FaArrowRight size={20} />
           </motion.div>
-        </motion.button>
+        </motion.a>
       </div>
 
       {/* Corner Decoration */}
