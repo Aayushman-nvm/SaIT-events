@@ -3,44 +3,20 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FaCalendarAlt, FaArchive } from "react-icons/fa";
+import { Types } from "mongoose";
 import Card from "../../ui/Card";
 import Background from "./component/Background";
 
 function Page() {
   type Event = {
+    _id: Types.ObjectId;
     title: string;
     description: string;
-    posterUrl: string;
+    poster: string;
     status: "ongoing" | "ended" | "upcoming";
     socialLink: string;
   };
   const [events, setEvents] = useState<Event[]>([]);
-  /*const eventsContainer = [
-    {
-      title: "1st event",
-      path: "/images/background.jpg",
-      description: "1st event description",
-      status: "Active",
-    },
-    {
-      title: "2nd event",
-      path: "/images/background.jpg",
-      description: "2nd event description",
-      status: "Active",
-    },
-    {
-      title: "3rd event",
-      path: "/images/background.jpg",
-      description: "3rd event description",
-      status: "Inactive",
-    },
-    {
-      title: "4th event",
-      path: "/images/background.jpg",
-      description: "4th event description",
-      status: "Inactive",
-    },
-  ];*/
 
   async function getPosts() {
     try {
@@ -49,6 +25,7 @@ function Page() {
         throw new Error("Failed to fetch posts");
       }
       const posts = await result.json();
+      console.log(posts);
       setEvents(posts);
       console.log(posts);
     } catch (error) {
@@ -133,8 +110,9 @@ function Page() {
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                 >
                   <Card
+                    id={event._id}
                     title={event.title}
-                    imgPath={event.posterUrl}
+                    imgPath={event.poster}
                     btnType="Primary"
                     description={event.description}
                     index={index}
@@ -206,8 +184,9 @@ function Page() {
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                 >
                   <Card
+                    id={event._id}
                     title={event.title}
-                    imgPath={event.posterUrl}
+                    imgPath={event.poster}
                     btnType="Secondary"
                     description={event.description}
                     index={index}

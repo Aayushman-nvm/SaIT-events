@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaInstagram } from 'react-icons/fa';
 import { FiExternalLink } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai';
 import { HiCode } from 'react-icons/hi';
@@ -11,15 +11,15 @@ function Footer() {
   const socialLinks = [
     { 
       icon: FaGithub, 
-      href: "https://github.com/YOUR_REPO", 
+      href: "https://github.com/Aayushman-nvm/SaIT-events", 
       label: "GitHub",
       color: "hover:text-purple-400"
     },
     { 
-      icon: FaLinkedin, 
-      href: "https://www.linkedin.com/in/YOUR_LINKEDIN", 
-      label: "LinkedIn",
-      color: "hover:text-blue-400"
+      icon: FaInstagram, 
+      href: "https://www.instagram.com/oscode_sait/?igsh=MThsNGozdGxjaTVwcw%3D%3D#", 
+      label: "Instagram",
+      color: "hover:text-red-400"
     }
   ];
 

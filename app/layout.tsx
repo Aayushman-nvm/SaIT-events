@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "XYZ College Events",
+  title: "SaIT Tech Events",
   description: "Landing page for upcoming college events",
 };
 

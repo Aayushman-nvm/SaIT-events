@@ -1,12 +1,21 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaUsers, FaCode, FaRocket } from "react-icons/fa";
 import ProfileCard from "./components/ProfileCard";
 import Background from "../events/component/Background";
+import Contributor from "./components/Contributor";
 
 function AboutPage() {
+  interface ContributorData {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+    contributions: number;
+  }
+
+  const [contributors, setContributors] = useState<ContributorData[]>([]);
   const aboutData = [
     {
       name: "Aayushman Jha",
@@ -42,11 +51,23 @@ function AboutPage() {
     },
   ];
 
+  async function getContributors() {
+    const response = await fetch(
+      "https://api.github.com/repos/Aayushman-nvm/SaIT-events/contributors"
+    );
+    const data = await response.json();
+    setContributors(data);
+    console.log(data);
+  }
+
+  useEffect(() => {
+    getContributors();
+  }, []);
   return (
     <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
       {/* Hero Section */}
       <Background />
-      {/* Team Section */}
+      {/* Contributors Section */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -55,6 +76,42 @@ function AboutPage() {
         className="relative py-20"
       >
         <div className="max-w-6xl mx-auto px-6">
+          {/* Contributors Section */}
+          {contributors.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-20"
+            >
+              <h3 className="text-red-500 text-sm uppercase tracking-wider mb-2">
+                Our Contributors
+              </h3>
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+                Built By The Community
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full mb-8" />
+
+              {/* Centered Contributors Grid */}
+              <div className="mt-12">
+                <div className="flex flex-wrap justify-center gap-6 md:gap-8 px-4 md:px-8">
+                  {contributors
+                    .sort((a, b) => b.contributions - a.contributions)
+                    .map((data, index) => (
+                      <Contributor
+                        key={data.login}
+                        login={data.login}
+                        avatar_url={data.avatar_url}
+                        html_url={data.html_url}
+                        contributions={data.contributions}
+                      />
+                    ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Team Section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -99,7 +156,7 @@ function AboutPage() {
           />
         </div>
       </motion.section>
-
+      
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -150,7 +207,6 @@ function AboutPage() {
           </motion.p>
         </div>
       </motion.section>
-
       {/* Features Section */}
       <motion.section
         initial={{ opacity: 0 }}
