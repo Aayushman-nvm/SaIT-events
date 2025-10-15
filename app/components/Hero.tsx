@@ -125,24 +125,26 @@ function Hero() {
             transition={{ duration: 0.8, delay: 1.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <motion.button
+            <motion.a
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0 0 30px rgba(239, 68, 68, 0.5)",
               }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-xl transition-all duration-300 shadow-xl text-lg"
+              href="/events"
             >
               View Upcoming Events
-            </motion.button>
+            </motion.a>
 
-            <motion.button
+            <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 border-2 border-white/30 hover:border-red-400 text-white hover:text-red-400 font-semibold rounded-xl transition-all duration-300 text-lg backdrop-blur-sm"
-            >
+              href="/about"
+              >
               Learn More
-            </motion.button>
+            </motion.a>
           </motion.div>
         </div>
 
