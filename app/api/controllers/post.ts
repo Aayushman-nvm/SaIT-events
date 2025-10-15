@@ -3,13 +3,13 @@ import { NextResponse } from 'next/server';
 //create, delete, update post fucntions
 //create
 interface createPostProps{
-    title:String;
-    description:String;
-    info: String;
-    status:String;
-    poster:String;
-    registrationLink:String;
-    socialLink:String;
+    title:string;
+    description:string;
+    info: string;
+    status:string;
+    poster:string;
+    registrationLink:string;
+    socialLink:string;
 }
 
 export async function createPost({title, description, info, poster, registrationLink, status, socialLink}:createPostProps) {
