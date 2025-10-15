@@ -203,7 +203,7 @@ function AboutPage() {
             IT community, brought together by a shared vision - to create a
             unified platform where we can showcase our work and keep you
             updated. This is a platform made by students for the students to use
-            so you don't miss out on anything techie.
+            so you don&apos;t miss out on anything techie.
           </motion.p>
         </div>
       </motion.section>

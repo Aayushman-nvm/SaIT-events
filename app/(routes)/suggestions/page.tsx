@@ -117,8 +117,8 @@ function SuggestionsPage() {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
           >
-            Have an event idea? A doubt? Or just want to drop feedback? We're all ears. 
-            You're the reason we do what we do - and yes, you'll be heard.
+            Have an event idea? A doubt? Or just want to drop feedback? We&apos;re all ears. 
+            You&apos;re the reason we do what we do - and yes, you&apos;ll be heard.
           </motion.p>
         </motion.div>
 
