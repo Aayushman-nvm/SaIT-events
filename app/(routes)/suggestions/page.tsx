@@ -1,11 +1,20 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { FaLightbulb, FaPaperPlane, FaUser, FaEnvelope, FaCommentDots } from "react-icons/fa";
+import {
+  FaLightbulb,
+  FaPaperPlane,
+  FaUser,
+  FaEnvelope,
+  FaCommentDots,
+} from "react-icons/fa";
+import emailjs from "@emailjs/browser";
 import Background from "../events/component/Background";
 
 function SuggestionsPage() {
+  const formRef = useRef<HTMLFormElement>(null);
+
   const [userData, setUserData] = useState({
     email: "",
     name: "",
@@ -14,6 +23,7 @@ function SuggestionsPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     console.log("Name: ", userData.name);
@@ -21,49 +31,73 @@ function SuggestionsPage() {
     console.log("Request: ", userData.request);
   }, [userData]);
 
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setSubmitted(true);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setUserData({ email: "", name: "", request: "" });
-    }, 3000);
+    setError("");
+
+    try {
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error(
+          "EmailJS configuration is missing. Please check your environment variables."
+        );
+      }
+
+      // sending email using email js
+      const result = await emailjs.sendForm(
+        serviceId,
+        templateId,
+        formRef.current!,
+        publicKey
+      );
+
+      console.log("SUCCESS!", result.status, result.text);
+
+      setIsSubmitting(false);
+      setSubmitted(true);
+
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setSubmitted(false);
+        setUserData({ email: "", name: "", request: "" });
+      }, 3000);
+    } catch (err: any) {
+      console.error("FAILED...", err);
+      setError(err.text || "Failed to send message. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
-      <Background/>
+      <Background />
       {/* Background Decorations */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
-          animate={{ 
+          animate={{
             rotate: [0, 360],
-            scale: [1, 1.1, 1]
+            scale: [1, 1.1, 1],
           }}
-          transition={{ 
+          transition={{
             duration: 25,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear",
           }}
           className="absolute w-96 h-96 border border-red-500/10 rounded-full -top-48 -right-48"
         />
         <motion.div
-          animate={{ 
+          animate={{
             rotate: [360, 0],
-            scale: [1, 1.2, 1]
+            scale: [1, 1.2, 1],
           }}
-          transition={{ 
+          transition={{
             duration: 30,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear",
           }}
           className="absolute w-64 h-64 border border-red-500/5 rounded-full -bottom-32 -left-32"
         />
@@ -80,7 +114,12 @@ function SuggestionsPage() {
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ duration: 0.6, type: "spring", bounce: 0.4, delay: 0.2 }}
+            transition={{
+              duration: 0.6,
+              type: "spring",
+              bounce: 0.4,
+              delay: 0.2,
+            }}
             className="inline-flex items-center justify-center w-20 h-20 bg-red-500/20 rounded-full mb-8"
           >
             <FaLightbulb className="w-10 h-10 text-red-500" />
@@ -117,8 +156,9 @@ function SuggestionsPage() {
             transition={{ duration: 0.6, delay: 0.7 }}
             className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto"
           >
-            Have an event idea? A doubt? Or just want to drop feedback? We&apos;re all ears. 
-            You&apos;re the reason we do what we do - and yes, you&apos;ll be heard.
+            Have an event idea? A doubt? Or just want to drop feedback?
+            We&apos;re all ears. You&apos;re the reason we do what we do - and
+            yes, you&apos;ll be heard.
           </motion.p>
         </motion.div>
 
@@ -129,7 +169,7 @@ function SuggestionsPage() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="max-w-2xl mx-auto"
         >
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
             {/* Name Input */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -142,8 +182,11 @@ function SuggestionsPage() {
               </div>
               <input
                 type="text"
+                name="user_name"
                 value={userData.name}
-                onChange={(e) => setUserData((prev) => ({ ...prev, name: e.target.value }))}
+                onChange={(e) =>
+                  setUserData((prev) => ({ ...prev, name: e.target.value }))
+                }
                 placeholder="Your Name"
                 className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
                 required
@@ -162,8 +205,11 @@ function SuggestionsPage() {
               </div>
               <input
                 type="email"
+                name="user_email"
                 value={userData.email}
-                onChange={(e) => setUserData((prev) => ({ ...prev, email: e.target.value }))}
+                onChange={(e) =>
+                  setUserData((prev) => ({ ...prev, email: e.target.value }))
+                }
                 placeholder="example@gmail.com"
                 className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300"
                 required
@@ -181,14 +227,28 @@ function SuggestionsPage() {
                 <FaCommentDots className="h-5 w-5 text-red-500 group-focus-within:text-red-400 transition-colors mt-1" />
               </div>
               <textarea
+                name="message"
                 value={userData.request}
-                onChange={(e) => setUserData((prev) => ({ ...prev, request: e.target.value }))}
+                onChange={(e) =>
+                  setUserData((prev) => ({ ...prev, request: e.target.value }))
+                }
                 placeholder="Enter your suggestion, request or feedback here..."
                 rows={6}
                 className="w-full pl-16 pr-6 py-4 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 focus:outline-none transition-all duration-300 resize-none"
                 required
               />
             </motion.div>
+
+            {/* Error Message */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 text-sm"
+              >
+                {error}
+              </motion.div>
+            )}
 
             {/* Submit Button */}
             <motion.div
@@ -200,17 +260,19 @@ function SuggestionsPage() {
               <motion.button
                 type="submit"
                 disabled={isSubmitting || submitted}
-                whileHover={{ 
+                whileHover={{
                   scale: submitted ? 1 : 1.05,
-                  boxShadow: submitted ? "none" : "0 0 30px rgba(239, 68, 68, 0.5)"
+                  boxShadow: submitted
+                    ? "none"
+                    : "0 0 30px rgba(239, 68, 68, 0.5)",
                 }}
                 whileTap={{ scale: submitted ? 1 : 0.95 }}
                 className={`inline-flex items-center gap-3 px-12 py-4 font-semibold rounded-xl transition-all duration-300 shadow-xl ${
                   submitted
-                    ? 'bg-green-600 text-white cursor-default'
+                    ? "bg-green-600 text-white cursor-default"
                     : isSubmitting
-                    ? 'bg-gray-600 text-gray-300 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white'
+                    ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                    : "bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white"
                 }`}
               >
                 {submitted ? (
@@ -228,7 +290,11 @@ function SuggestionsPage() {
                   <>
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="w-5 h-5 border-2 border-gray-300 border-t-transparent rounded-full"
                     />
                     Submitting...
