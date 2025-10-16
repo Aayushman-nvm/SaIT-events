@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "gen:hash": "cross-env NODE_ENV=development RUN_LOCAL=true node app/api/scripts/hashScript.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
