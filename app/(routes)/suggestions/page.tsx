@@ -65,9 +65,9 @@ function SuggestionsPage() {
         setSubmitted(false);
         setUserData({ email: "", name: "", request: "" });
       }, 3000);
-    } catch (err: any) {
+    } catch (err) {
       console.error("FAILED...", err);
-      setError(err.text || "Failed to send message. Please try again.");
+      setError("Failed to send message. Please try again.");
       setIsSubmitting(false);
     }
   };
