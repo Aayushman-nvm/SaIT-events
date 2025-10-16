@@ -1,5 +1,3 @@
-import bcrypt from "bcrypt";
-
 interface AuthParameter {
   email: string;
   password: string;
@@ -7,31 +5,17 @@ interface AuthParameter {
 
 export async function authCheck({ email, password }: AuthParameter) {
   console.log("Function parameters: ", email + "\nPassword: ", password);
-  console.log("Raw password:", JSON.stringify(password));
-  console.log("Password length:", password.length);
   const cleanedPassword = password.trim();
   console.log("cleaned Password:", cleanedPassword);
   const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-  console.log("Hash from env:", process.env.ADMIN_PASSWORD_HASH);
-  console.log("Length:", process.env.ADMIN_PASSWORD_HASH?.length);
-  console.log("Auth data: ", adminEmail + "\n: ", adminPasswordHash);
-  console.log(
-    "ENV data: ",
-    process.env.ADMIN_EMAIL + "\n: ",
-    process.env.ADMIN_PASSWORD_HASH
-  );
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  if (!adminEmail || !adminPasswordHash) {
+  if (!adminEmail || !adminPassword) {
     throw new Error("Environment variables are not properly set.");
   }
 
   const isEmailMatch = email === adminEmail;
-  const isPasswordMatch = await bcrypt.compare(
-    cleanedPassword,
-    adminPasswordHash
-  );
-  //const isPasswordMatch = password === adminPasswordHash;
+  const isPasswordMatch = cleanedPassword === adminPassword;
   console.log("Match data: ", isEmailMatch + "\n: ", isPasswordMatch);
 
   return {
