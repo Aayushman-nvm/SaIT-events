@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { IoMenu } from "react-icons/io5";
 import { FaXmark } from "react-icons/fa6";
+import Image from "next/image";
 
 const navLinks = [
-  { title: 'Home', link: '/' },
-  { title: 'Events', link: '/events' },
-  { title: 'Suggestions', link: '/suggestions' },
-  { title: 'About', link: '/about' },
+  { title: "Home", link: "/" },
+  { title: "Events", link: "/events" },
+  { title: "Suggestions", link: "/suggestions" },
+  { title: "About", link: "/about" },
 ];
 
 function NavBar() {
@@ -22,8 +23,8 @@ function NavBar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -34,16 +35,41 @@ function NavBar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className={`fixed top-0 left-0 w-full z-50 px-4 sm:px-8 py-4 transition-all duration-300 ${
-        scrolled ? 'bg-black/90 backdrop-blur-lg shadow-lg' : 'bg-transparent backdrop-blur-sm'
+        scrolled
+          ? "bg-black/90 backdrop-blur-lg shadow-lg"
+          : "bg-transparent backdrop-blur-sm"
       }`}
     >
-      <div className="flex items-center justify-between max-w-7xl mx-auto">
-        {/* Logo */}
+      <div className="flex items-center justify-between max-w-7xl mx-auto relative">
+        {/* os code logo */}
         <motion.div
           whileHover={{ scale: 1.05 }}
-          className="text-white text-xl sm:text-2xl font-bold tracking-wide"
+          className="flex items-center"
         >
-          <span className="text-red-500">Sambhram</span> IT
+          <Image
+            src="/logos/OScode_svg.svg"
+            alt="OS code Logo"
+            className="h-8 w-auto sm:h-10 md:h-12"
+            width={40}
+            height={40}
+          />
+          <span className="hidden md:block text-cyan-400 text-base font-medium tracking-wide">
+            Chapter 3
+          </span>
+        </motion.div>
+
+        {/* sambhram logo */}
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          className="absolute left-1/2 transform -translate-x-1/2"
+        >
+          <Image
+            src="/logos/SaIT_svg.svg"
+            alt="Sambhram Logo"
+            className="h-8 w-auto sm:h-10 md:h-12 rounded"
+            width={40}
+            height={40}
+          />
         </motion.div>
 
         {/* Desktop Navigation */}
@@ -57,11 +83,11 @@ function NavBar() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.1, color: '#ef4444' }}
+                whileHover={{ scale: 1.1, color: "#ef4444" }}
                 className={`relative ${
                   isActive
-                    ? 'text-red-500 font-semibold'
-                    : 'text-white hover:text-red-400'
+                    ? "text-red-500 font-semibold"
+                    : "text-white hover:text-red-400"
                 } transition-all duration-300`}
               >
                 {nav.title}
@@ -92,7 +118,7 @@ function NavBar() {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden bg-black/95 backdrop-blur-lg mt-4 rounded-lg overflow-hidden"
@@ -110,8 +136,8 @@ function NavBar() {
                     onClick={() => setIsOpen(false)}
                     className={`block py-3 px-4 rounded-lg text-lg transition-all duration-300 ${
                       isActive
-                        ? 'text-red-500 bg-red-500/10 font-semibold'
-                        : 'text-white hover:text-red-400 hover:bg-red-500/5'
+                        ? "text-red-500 bg-red-500/10 font-semibold"
+                        : "text-white hover:text-red-400 hover:bg-red-500/5"
                     }`}
                   >
                     {nav.title}
