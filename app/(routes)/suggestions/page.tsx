@@ -182,7 +182,7 @@ function SuggestionsPage() {
               </div>
               <input
                 type="text"
-                name="user_name"
+                name="name"
                 value={userData.name}
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, name: e.target.value }))
@@ -205,7 +205,7 @@ function SuggestionsPage() {
               </div>
               <input
                 type="email"
-                name="user_email"
+                name="email"
                 value={userData.email}
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, email: e.target.value }))
