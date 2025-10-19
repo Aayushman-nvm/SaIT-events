@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaUsers, FaCode, FaRocket } from "react-icons/fa";
+import { FaUsers, FaCode, FaRocket, FaWrench, FaPaintBrush, FaCamera } from "react-icons/fa";
 import ProfileCard from "./components/ProfileCard";
+import MemberCard from "./components/MemberCard";
+import TeamAccordion from "./components/TeamAccordion";
 import Background from "../events/component/Background";
 import Contributor from "./components/Contributor";
+import officeInfo from "../../office-info";
 
 function AboutPage() {
   interface ContributorData {
@@ -16,20 +19,7 @@ function AboutPage() {
   }
 
   const [contributors, setContributors] = useState<ContributorData[]>([]);
-  const aboutData = [
-    {
-      name: "Aayushman Jha",
-      image: "",
-      description:
-        "Hey! I'm Aayushman Jha, the creator of this platform - built by students, for students. I often missed out on events and updates simply because there was no central place for it all. So, I made what I wish I had - a unified space to help you stay informed, connected, and in control of campus life.",
-    },
-    {
-      name: "Balakrishna",
-      image: "",
-      description:
-        "Meet Balakrishna Sir - our mentor and guiding force. By working closely with the student community, he helped us identify the real challenges students face in finding events. His support has been key in making this platform more effective and student-focused.",
-    },
-  ];
+  const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(null);
 
   const features = [
     {
@@ -52,132 +42,53 @@ function AboutPage() {
   ];
 
   async function getContributors() {
-    const response = await fetch(
-      "https://api.github.com/repos/Aayushman-nvm/SaIT-events/contributors"
-    );
-    const data = await response.json();
-    setContributors(data);
-    console.log(data);
+    try {
+      const response = await fetch(
+        "https://api.github.com/repos/Aayushman-nvm/SaIT-events/contributors"
+      );
+      const data = await response.json();
+      setContributors(data);
+    } catch (error) {
+      console.error("Failed to fetch contributors:", error);
+    }
   }
 
   useEffect(() => {
     getContributors();
   }, []);
+
+  const mentors = officeInfo[0].Mentors;
+  const management = officeInfo[0].Management;
+  const technicalTeam = officeInfo[0]["Technical Team"];
+  const creativeTeam = officeInfo[0]["Creative Team"];
+  const prTeam = officeInfo[0]["Public Relations Team"];
+
   return (
     <div className="min-h-screen bg-black text-white font-sans overflow-x-hidden">
-      {/* Hero Section */}
       <Background />
-      {/* Contributors Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="relative py-20"
-      >
-        <div className="max-w-6xl mx-auto px-6">
-          {/* Contributors Section */}
-          {contributors.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-20"
-            >
-              <h3 className="text-red-500 text-sm uppercase tracking-wider mb-2">
-                Our Contributors
-              </h3>
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                Built By The Community
-              </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full mb-8" />
 
-              {/* Centered Contributors Grid */}
-              <div className="mt-12">
-                <div className="flex flex-wrap justify-center gap-6 md:gap-8 px-4 md:px-8">
-                  {contributors
-                    .sort((a, b) => b.contributions - a.contributions)
-                    .map((data, index) => (
-                      <Contributor
-                        key={data.login}
-                        login={data.login}
-                        avatar_url={data.avatar_url}
-                        html_url={data.html_url}
-                        contributions={data.contributions}
-                      />
-                    ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Team Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h3 className="text-red-500 text-sm uppercase tracking-wider mb-2">
-              Meet The Team
-            </h3>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              The People Behind
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {aboutData.map((data, index) => (
-              <ProfileCard
-                key={index}
-                name={data.name}
-                imgPath={data.image}
-                description={data.description}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Background Decoration */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <motion.div
-            animate={{
-              rotate: [0, -360],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 30,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute w-80 h-80 border border-red-500/5 rounded-full -bottom-40 -right-40"
-          />
-        </div>
-      </motion.section>
-      
+      {/* Hero Section */}
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative pt-32 pb-20"
+        className="relative pt-20 sm:pt-32 pb-12 sm:pb-20 px-4"
       >
-        <div className="max-w-6xl mx-auto px-6 text-center">
+        <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-            className="inline-flex items-center justify-center w-20 h-20 bg-red-500/20 rounded-full mb-8"
+            className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-red-500/20 rounded-full mb-6 sm:mb-8"
           >
-            <FaUsers className="w-10 h-10 text-red-500" />
+            <FaUsers className="w-8 h-8 sm:w-10 sm:h-10 text-red-500" />
           </motion.div>
 
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-red-500 text-sm uppercase tracking-wider mb-4"
+            className="text-red-500 text-xs sm:text-sm uppercase tracking-wider mb-3 sm:mb-4"
           >
             About Us
           </motion.h2>
@@ -186,18 +97,18 @@ function AboutPage() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight"
+            className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 sm:mb-8 leading-tight px-4"
           >
             Who We Are
           </motion.h1>
 
-          <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full mb-8" />
+          <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full mb-6 sm:mb-8" />
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-gray-300 text-lg md:text-xl leading-relaxed max-w-4xl mx-auto"
+            className="text-gray-300 text-base sm:text-lg md:text-xl leading-relaxed max-w-4xl mx-auto px-4"
           >
             We are a group of like-minded individuals from the Sambhram CS and
             IT community, brought together by a shared vision - to create a
@@ -207,31 +118,184 @@ function AboutPage() {
           </motion.p>
         </div>
       </motion.section>
+
+      {/* Community Section Header */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative py-12 sm:py-16 px-4"
+      >
+        <div className="max-w-6xl mx-auto text-center">
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-red-500 text-xs sm:text-sm uppercase tracking-wider mb-2 sm:mb-3"
+          >
+            The Community
+          </motion.h3>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 px-4"
+          >
+            The Team Behind The Scenes
+          </motion.h2>
+          <div className="w-20 sm:w-32 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
+        </div>
+      </motion.section>
+
+      {/* Mentors Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative py-8 sm:py-12 px-4"
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-6 sm:mb-10"
+          >
+            <h3 className="text-red-500 text-xs sm:text-sm uppercase tracking-wider mb-2">
+              {mentors[0].title}
+            </h3>
+            <div className="w-12 sm:w-20 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
+            {mentors.slice(1).map((mentor, index) => (
+              <ProfileCard
+                key={index}
+                imgPath={mentor.Image!}
+                name={mentor.NAME!}
+                description={mentor.ABOUT!}
+                role={mentor.ROLE!}
+                index={index}
+              />
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Management Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative py-8 sm:py-12 px-4"
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-6 sm:mb-10"
+          >
+            <h3 className="text-red-500 text-xs sm:text-sm uppercase tracking-wider mb-2">
+              {management[0].title}
+            </h3>
+            <div className="w-12 sm:w-20 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+            {management.slice(1).map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <MemberCard
+                  name={member.NAME!}
+                  image={member.Image!}
+                  role={member.ROLE!}
+                  about={member.ABOUT}
+                  showOneLiner={true}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Teams Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative py-8 sm:py-12 px-4"
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-6 sm:mb-10"
+          >
+            <h3 className="text-red-500 text-xs sm:text-sm uppercase tracking-wider mb-2">
+              Our Teams
+            </h3>
+            <div className="w-12 sm:w-20 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
+          </motion.div>
+
+          <div className="space-y-4 sm:space-y-5">
+            <TeamAccordion 
+              teamData={technicalTeam} 
+              icon={<FaWrench/>}
+              isOpen={openAccordionIndex === 0}
+              onToggle={() => setOpenAccordionIndex(openAccordionIndex === 0 ? null : 0)}
+            />
+            <TeamAccordion 
+              teamData={creativeTeam} 
+              icon={<FaPaintBrush/>}
+              isOpen={openAccordionIndex === 1}
+              onToggle={() => setOpenAccordionIndex(openAccordionIndex === 1 ? null : 1)}
+            />
+            <TeamAccordion 
+              teamData={prTeam} 
+              icon={<FaCamera/>}
+              isOpen={openAccordionIndex === 2}
+              onToggle={() => setOpenAccordionIndex(openAccordionIndex === 2 ? null : 2)}
+            />
+          </div>
+        </div>
+      </motion.section>
+
       {/* Features Section */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="relative py-20"
+        className="relative py-12 sm:py-16 px-4"
       >
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h3 className="text-red-500 text-sm uppercase tracking-wider mb-2">
+            <h3 className="text-red-500 text-xs sm:text-sm uppercase tracking-wider mb-2">
               Our Vision
             </h3>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 px-4">
               What Drives Us
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
+            <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full" />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -239,19 +303,16 @@ function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{
-                  scale: 1.05,
-                  y: -10,
-                }}
-                className="text-center p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-black/50 border border-red-500/20 hover:border-red-500/40 transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -10 }}
+                className="text-center p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-gray-900/50 to-black/50 border border-red-500/20 hover:border-red-500/40 transition-all duration-300"
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 rounded-full mb-6">
-                  <feature.icon className="w-8 h-8 text-red-500" />
+                <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-red-500/20 rounded-full mb-4 sm:mb-6">
+                  <feature.icon className="w-6 h-6 sm:w-8 sm:h-8 text-red-500" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
                   {feature.title}
                 </h3>
-                <p className="text-gray-400 leading-relaxed">
+                <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -259,6 +320,48 @@ function AboutPage() {
           </div>
         </div>
       </motion.section>
+
+      {/* Contributors Section */}
+      {contributors.length > 0 && (
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative py-12 sm:py-16 px-4 pb-24 sm:pb-32"
+        >
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-8 sm:mb-12"
+            >
+              <h3 className="text-red-500 text-xs sm:text-sm uppercase tracking-wider mb-2">
+                Our Contributors
+              </h3>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 px-4">
+                Built By The Community
+              </h2>
+              <div className="w-16 sm:w-24 h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto rounded-full mb-8" />
+            </motion.div>
+
+            <div className="flex flex-wrap justify-center gap-6 md:gap-8 px-4 md:px-8">
+              {contributors
+                .sort((a, b) => b.contributions - a.contributions)
+                .map((data) => (
+                  <Contributor
+                    key={data.login}
+                    login={data.login}
+                    avatar_url={data.avatar_url}
+                    html_url={data.html_url}
+                    contributions={data.contributions}
+                  />
+                ))}
+            </div>
+          </div>
+        </motion.section>
+      )}
     </div>
   );
 }
