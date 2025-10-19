@@ -2,13 +2,32 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaUsers, FaCode, FaRocket, FaWrench, FaPaintBrush, FaCamera } from "react-icons/fa";
+import {
+  FaUsers,
+  FaCode,
+  FaRocket,
+  FaWrench,
+  FaPaintBrush,
+  FaCamera,
+} from "react-icons/fa";
 import ProfileCard from "./components/ProfileCard";
 import MemberCard from "./components/MemberCard";
 import TeamAccordion from "./components/TeamAccordion";
 import Background from "../events/component/Background";
 import Contributor from "./components/Contributor";
 import officeInfo from "../../office-info";
+
+interface TeamInfo {
+  title: string;
+  tagline: string;
+}
+
+interface TeamMember {
+  NAME: string;
+  ABOUT: string;
+  ROLE: string;
+  Image: string;
+}
 
 function AboutPage() {
   interface ContributorData {
@@ -19,7 +38,9 @@ function AboutPage() {
   }
 
   const [contributors, setContributors] = useState<ContributorData[]>([]);
-  const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(null);
+  const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(
+    null
+  );
 
   const features = [
     {
@@ -249,23 +270,29 @@ function AboutPage() {
           </motion.div>
 
           <div className="space-y-4 sm:space-y-5">
-            <TeamAccordion 
-              teamData={technicalTeam} 
-              icon={<FaWrench/>}
+            <TeamAccordion
+              teamData={technicalTeam as [TeamInfo, ...TeamMember[]]}
+              icon={<FaWrench />}
               isOpen={openAccordionIndex === 0}
-              onToggle={() => setOpenAccordionIndex(openAccordionIndex === 0 ? null : 0)}
+              onToggle={() =>
+                setOpenAccordionIndex(openAccordionIndex === 0 ? null : 0)
+              }
             />
-            <TeamAccordion 
-              teamData={creativeTeam} 
-              icon={<FaPaintBrush/>}
+            <TeamAccordion
+              teamData={creativeTeam as [TeamInfo, ...TeamMember[]]}
+              icon={<FaPaintBrush />}
               isOpen={openAccordionIndex === 1}
-              onToggle={() => setOpenAccordionIndex(openAccordionIndex === 1 ? null : 1)}
+              onToggle={() =>
+                setOpenAccordionIndex(openAccordionIndex === 1 ? null : 1)
+              }
             />
-            <TeamAccordion 
-              teamData={prTeam} 
-              icon={<FaCamera/>}
+            <TeamAccordion
+              teamData={prTeam as [TeamInfo, ...TeamMember[]]}
+              icon={<FaCamera />}
               isOpen={openAccordionIndex === 2}
-              onToggle={() => setOpenAccordionIndex(openAccordionIndex === 2 ? null : 2)}
+              onToggle={() =>
+                setOpenAccordionIndex(openAccordionIndex === 2 ? null : 2)
+              }
             />
           </div>
         </div>
