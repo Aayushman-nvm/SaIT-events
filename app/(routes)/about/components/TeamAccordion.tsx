@@ -2,19 +2,37 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronDown } from "react-icons/fa";
 import MemberCard from "./MemberCard";
 
+interface TeamInfo {
+  title: string;
+  tagline: string;
+}
+
+interface TeamMember {
+  NAME: string;
+  ABOUT: string;
+  ROLE: string;
+  Image: string;
+}
+
 interface TeamAccordionProps {
-  teamData: any[];
+  teamData: [TeamInfo, ...TeamMember[]];
   icon: React.ReactNode;
   isOpen: boolean;
   onToggle: () => void;
 }
 
-const TeamAccordion = ({ teamData, icon, isOpen, onToggle }: TeamAccordionProps) => {
-  const teamInfo = teamData[0];
-  const lead = teamData.find(
+const TeamAccordion = ({
+  teamData,
+  icon,
+  isOpen,
+  onToggle,
+}: TeamAccordionProps) => {
+  const teamInfo = teamData[0] as TeamInfo;
+  const teamMembers = teamData.slice(1) as TeamMember[];
+  const lead = teamMembers.find(
     (member) => member.ROLE && member.ROLE.includes("LEAD")
   );
-  const members = teamData.filter(
+  const members = teamMembers.filter(
     (member) => member.NAME && !member.ROLE?.includes("LEAD")
   );
 
