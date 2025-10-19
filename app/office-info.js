@@ -12,7 +12,7 @@ const officeInfo = [
         Image: "",
       },
       {
-        NAME: "Dr.Balakrishanan",
+        NAME: "Dr.Balakrishnan",
         ABOUT: "Balakrishnan Sir is the go-to person for everything in our community, ensuring smooth execution of all tech events from start to finish.",
         ROLE: "Coordinator-Associate Professor, Computer Science and Engineering",
         Image: "",
