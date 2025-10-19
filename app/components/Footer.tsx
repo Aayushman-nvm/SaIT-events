@@ -1,33 +1,33 @@
 "use client";
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FaGithub, FaInstagram } from 'react-icons/fa';
-import { FiExternalLink } from 'react-icons/fi';
-import { AiFillHeart } from 'react-icons/ai';
-import { HiCode } from 'react-icons/hi';
 
+import { motion } from "framer-motion";
+import { FaGithub, FaInstagram } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
+import { AiFillHeart } from "react-icons/ai";
+import { HiCode } from "react-icons/hi";
+import Image from "next/image";
 
 function Footer() {
   const socialLinks = [
-    { 
-      icon: FaGithub, 
-      href: "https://github.com/Aayushman-nvm/SaIT-events", 
+    {
+      icon: FaGithub,
+      href: "https://github.com/Aayushman-nvm/SaIT-events",
       label: "GitHub",
-      color: "hover:text-purple-400"
+      color: "hover:text-purple-400",
     },
-    { 
-      icon: FaInstagram, 
-      href: "https://www.instagram.com/oscode_sait/?igsh=MThsNGozdGxjaTVwcw%3D%3D#", 
+    {
+      icon: FaInstagram,
+      href: "https://www.instagram.com/oscode_sait/?igsh=MThsNGozdGxjaTVwcw%3D%3D#",
       label: "Instagram",
-      color: "hover:text-red-400"
-    }
+      color: "hover:text-red-400",
+    },
   ];
 
   const quickLinks = [
     { title: "Home", href: "/" },
     { title: "Events", href: "/events" },
     { title: "Suggestions", href: "/suggestions" },
-    { title: "About", href: "/about" }
+    { title: "About", href: "/about" },
   ];
 
   const containerVariants = {
@@ -36,22 +36,22 @@ function Footer() {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        duration: 0.6
-      }
-    }
+        duration: 0.6,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.6 }
-    }
+      transition: { duration: 0.6 },
+    },
   };
 
   return (
-    <motion.footer 
+    <motion.footer
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
@@ -60,7 +60,7 @@ function Footer() {
     >
       {/* Top Border Glow */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500 to-transparent" />
-      
+
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 w-32 h-32 border border-red-500 rounded-full" />
@@ -70,34 +70,50 @@ function Footer() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <motion.div 
-          variants={itemVariants}
-          className="py-12 lg:py-16"
-        >
+        <motion.div variants={itemVariants} className="py-12 lg:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {/* Brand Section */}
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               className="lg:col-span-2 space-y-6"
             >
               <div className="space-y-4">
-                <motion.h3 
-                  whileHover={{ scale: 1.05 }}
-                  className="text-3xl font-bold text-white"
-                >
-                  <span className="text-red-500">Sambhram</span> IT
-                </motion.h3>
+                <div className="flex">
+                  {/* Sambhram logo */}
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Image
+                    src="/logos/SaIT_svg.svg"
+                    alt="Sambhram Logo"
+                    className="h-8 w-auto sm:h-10 md:h-12 rounded"
+                    width={40}
+                    height={40}
+                  />
+                </motion.div>
+                {/* OScode logo */}
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Image
+                    src="/logos/OScode_svg.svg"
+                    alt="OS code Logo"
+                    className="h-8 w-auto sm:h-10 md:h-12"
+                    width={40}
+                    height={40}
+                  />
+                </motion.div>
+                </div>
                 <p className="text-lg text-gray-400 leading-relaxed max-w-md">
-                  Empowering the next generation of tech innovators through 
+                  Empowering the next generation of tech innovators through
                   cutting-edge events, workshops, and community collaboration.
                 </p>
               </div>
-              
+
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600/20 to-red-800/20 border border-red-500/30 rounded-lg hover:border-red-500/50 transition-all duration-300 group"
               >
-                <FiExternalLink size={18} className="text-red-400 group-hover:text-red-300" />
+                <FiExternalLink
+                  size={18}
+                  className="text-red-400 group-hover:text-red-300"
+                />
                 <a
                   href="https://sambhramit.com/"
                   target="_blank"
@@ -142,12 +158,13 @@ function Footer() {
                 <AiFillHeart size={20} className="text-red-400" />
                 Connect
               </h4>
-              
+
               <div className="space-y-4">
                 <p className="text-gray-400">
-                  Join our community and stay updated with the latest tech trends.
+                  Join our community and stay updated with the latest tech
+                  trends.
                 </p>
-                
+
                 <div className="flex flex-wrap gap-4">
                   {socialLinks.map((social, index) => (
                     <motion.a
@@ -157,11 +174,15 @@ function Footer() {
                       rel="noopener noreferrer"
                       initial={{ opacity: 0, scale: 0 }}
                       whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.2 + index * 0.1, type: "spring", bounce: 0.5 }}
-                      whileHover={{ 
-                        scale: 1.2, 
+                      transition={{
+                        delay: 0.2 + index * 0.1,
+                        type: "spring",
+                        bounce: 0.5,
+                      }}
+                      whileHover={{
+                        scale: 1.2,
                         rotate: 5,
-                        boxShadow: "0 0 20px rgba(239, 68, 68, 0.3)"
+                        boxShadow: "0 0 20px rgba(239, 68, 68, 0.3)",
                       }}
                       whileTap={{ scale: 0.9 }}
                       className={`p-3 bg-gray-800 hover:bg-gray-700 rounded-xl transition-all duration-300 ${social.color} group`}
@@ -177,32 +198,32 @@ function Footer() {
         </motion.div>
 
         {/* Bottom Section */}
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="border-t border-gray-800 py-8"
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <motion.p 
+            <motion.p
               whileHover={{ scale: 1.02 }}
               className="text-gray-500 text-center md:text-left"
             >
               © 2025 Sambhram IT. All rights reserved.
             </motion.p>
-            
+
             <motion.div
               whileHover={{ scale: 1.02 }}
               className="flex items-center gap-2 text-gray-500"
             >
               <span>Made with</span>
               <motion.div
-                animate={{ 
+                animate={{
                   scale: [1, 1.2, 1],
-                  rotate: [0, 5, -5, 0]
+                  rotate: [0, 5, -5, 0],
                 }}
-                transition={{ 
-                  duration: 2, 
+                transition={{
+                  duration: 2,
                   repeat: Infinity,
-                  repeatDelay: 3
+                  repeatDelay: 3,
                 }}
               >
                 <AiFillHeart size={16} className="text-red-500 fill-current" />
@@ -219,21 +240,21 @@ function Footer() {
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 100 }}
-            animate={{ 
+            animate={{
               opacity: [0, 0.1, 0],
               y: [100, -50, -100],
-              x: [0, 50, -30]
+              x: [0, 50, -30],
             }}
             transition={{
               duration: 15 + i * 5,
               delay: i * 3,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
             className="absolute w-2 h-2 bg-red-500/30 rounded-full blur-sm"
             style={{
               left: `${20 + i * 30}%`,
-              bottom: '10%'
+              bottom: "10%",
             }}
           />
         ))}
