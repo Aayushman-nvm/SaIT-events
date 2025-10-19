@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ContributorProps {
   login: string;
@@ -8,51 +8,85 @@ interface ContributorProps {
   contributions: number;
 }
 
-function Contributor({ login, avatar_url, html_url, contributions }: ContributorProps) {
+const Contributor = ({
+  login,
+  avatar_url,
+  html_url,
+  contributions,
+}: ContributorProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.a
       href={html_url}
       target="_blank"
       rel="noopener noreferrer"
-      initial={{ opacity: 0, scale: 0 }}
+      initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      transition={{ 
-        duration: 0.5,
-        type: "spring",
-        bounce: 0.4
-      }}
-      whileHover={{ 
-        scale: 1.1,
-        y: -8,
-      }}
-      className="relative flex-shrink-0 group cursor-pointer"
+      whileHover={{ scale: 1.1, y: -8 }}
+      transition={{ duration: 0.3 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative flex flex-col items-center group"
     >
-      {/* Profile image container */}
-      <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-3 border-red-500/40 overflow-hidden bg-gradient-to-br from-gray-900 to-black transition-all duration-300 group-hover:border-red-500 group-hover:shadow-lg group-hover:shadow-red-500/50">
-        <img
-          src={avatar_url}
-          alt={login}
-          className="w-full h-full object-cover"
-        />
-      </div>
-
-      {/* Hover tooltip */}
-      <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-10">
-        <div className="bg-black/90 backdrop-blur-sm border border-red-500/50 rounded-lg px-4 py-2 whitespace-nowrap">
-          <p className="text-white text-sm font-medium mb-1">{login}</p>
-          <p className="text-red-500 text-xs">
-            {contributions} {contributions === 1 ? 'contribution' : 'contributions'}
-          </p>
+      <div className="relative">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-red-500/30 group-hover:border-red-500/60 transition-all duration-300 bg-gray-800">
+          <img
+            src={avatar_url}
+            alt={login}
+            className="w-full h-full object-cover"
+          />
         </div>
-        {/* Arrow */}
-        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-red-500/50" />
+
+        {/* Glow Ring */}
+        <motion.div
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.15, 1],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute inset-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-2 border-red-500/20 rounded-full"
+        />
+
+        <div className="absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-3 bg-red-500 text-white text-xs sm:text-sm font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full border-2 border-black shadow-lg">
+          {contributions}
+        </div>
       </div>
 
-      {/* Glow effect */}
-      <div className="absolute inset-0 w-16 h-16 md:w-20 md:h-20 rounded-full bg-red-500/0 group-hover:bg-red-500/20 blur-xl -z-10 transition-all duration-300" />
+      <p className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-gray-300 font-medium text-center max-w-[80px] sm:max-w-[100px] md:max-w-[120px] truncate group-hover:text-white transition-colors duration-300">
+        {login}
+      </p>
+
+{/* Hover tooltip */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full mt-2 z-50 whitespace-nowrap"
+          >
+            <div className="bg-gray-900/95 border border-red-500/40 rounded-lg px-3 py-2 backdrop-blur-md shadow-2xl">
+              <p className="text-xs sm:text-sm text-white font-semibold mb-1">
+                {login}
+              </p>
+              <p className="text-xs text-gray-400">
+                {contributions} contribution{contributions !== 1 ? "s" : ""}
+              </p>
+            </div>
+            {/* Arrow */}
+            <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900/95 border-l border-t border-red-500/40 rotate-45" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.a>
   );
-}
+};
 
 export default Contributor;
