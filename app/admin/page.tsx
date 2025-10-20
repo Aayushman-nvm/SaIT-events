@@ -88,11 +88,31 @@ function page() {
           </motion.p>
         </motion.div>
 
+        {/* Admin Actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="flex flex-col sm:flex-row gap-6 justify-center mb-12"
+        >
+          <motion.a
+            href="/admin/manage"
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 0 30px rgba(59, 130, 246, 0.5)"
+            }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-300 shadow-xl text-lg"
+          >
+            Manage Events
+          </motion.a>
+        </motion.div>
+
         {/* Event Form Container */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
         >
           <EventForm/>
         </motion.div>

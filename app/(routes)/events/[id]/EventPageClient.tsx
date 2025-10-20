@@ -11,6 +11,20 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 
+// URL and image validation function
+const isValidImageUrl = (src: string): boolean => {
+  if (!src || src.trim() === '') return false;
+  
+  // Check if it's a valid absolute URL
+  try {
+    new URL(src);
+    return true;
+  } catch {
+    // Check if it's a valid relative path that starts with /
+    return src.startsWith('/');
+  }
+};
+
 interface Event {
   _id: string;
   title: string;
@@ -142,7 +156,7 @@ export default function EventPageClient({ event }: EventPageClientProps) {
             className="relative group"
           >
             <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900/50 to-black/50 border border-red-500/20 hover:border-red-500/40 transition-all duration-300">
-              {event.poster ? (
+              {event.poster && isValidImageUrl(event.poster) ? (
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.4 }}
@@ -154,6 +168,10 @@ export default function EventPageClient({ event }: EventPageClientProps) {
                     fill
                     className="object-cover"
                     priority
+                    onError={() => {
+                      // Handle image load error
+                      console.error('Failed to load image:', event.poster);
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </motion.div>
