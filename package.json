@@ -11,7 +11,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "framer-motion": "^12.23.12",
-    "mongoose": "^8.18.1",
+    "mongoose": "^8.19.1",
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
