@@ -10,8 +10,8 @@ import Image from "next/image";
 const navLinks = [
   { title: "Home", link: "/" },
   { title: "Events", link: "/events" },
-  { title: "Suggestions", link: "/suggestions" },
   { title: "About", link: "/about" },
+  { title: "Contact Us", link: "/contact" },
 ];
 
 function NavBar() {
@@ -42,9 +42,12 @@ function NavBar() {
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto relative">
         {/* os code logo */}
-        <motion.div
+        <motion.a
+          href="https://play.google.com/store/apps/details?id=com.oscode.oscode"
+          target="_blank"
+          rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
-          className="flex items-center"
+          className="flex items-center cursor-pointer"
         >
           <Image
             src="/logos/OScode_svg.svg"
@@ -56,12 +59,13 @@ function NavBar() {
           <span className="hidden md:block text-cyan-400 text-base font-medium tracking-wide">
             Chapter 3
           </span>
-        </motion.div>
+        </motion.a>
 
         {/* sambhram logo */}
-        <motion.div
+        <motion.a
+          href="/"
           whileHover={{ scale: 1.05 }}
-          className="absolute left-1/2 transform -translate-x-1/2"
+          className="absolute left-1/2 transform -translate-x-1/2 cursor-pointer"
         >
           <Image
             src="/logos/SaIT_svg.svg"
@@ -70,7 +74,7 @@ function NavBar() {
             width={40}
             height={40}
           />
-        </motion.div>
+        </motion.a>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex gap-8 text-lg">
