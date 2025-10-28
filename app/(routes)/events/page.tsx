@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { FaCalendarAlt, FaArchive } from "react-icons/fa";
+import { FaCalendarAlt, FaArchive, FaInbox } from "react-icons/fa";
 import { Types } from "mongoose";
 import Card from "../../ui/Card";
 import Background from "./component/Background";
+import LoadingSkeleton from "@/app/components/LoadingSkeleton";
+import EmptyState from "@/app/components/EmptyState";
 
 function Page() {
   type Event = {
@@ -17,9 +19,11 @@ function Page() {
     socialLink: string;
   };
   const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState<Boolean>(true);
 
   async function getPosts() {
     try {
+      setLoading(true);
       const result = await fetch("/api/events");
       if (!result.ok) {
         throw new Error("Failed to fetch posts");
@@ -28,7 +32,9 @@ function Page() {
       console.log(posts);
       setEvents(posts);
       console.log(posts);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log("Error fetching posts:", error);
     }
   }
@@ -101,24 +107,34 @@ function Page() {
 
             {/* Active Events Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {activeEvents.map((event, index) => (
-                <motion.div
-                  key={`active-${index}`}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                >
-                  <Card
-                    id={event._id}
-                    title={event.title}
-                    imgPath={event.poster}
-                    btnType="Primary"
-                    description={event.description}
-                    index={index}
-                  />
-                </motion.div>
-              ))}
+              {loading ? (
+                <>
+                  <LoadingSkeleton />
+                  <LoadingSkeleton />
+                </>
+              ) : activeEvents.length > 0 ? (
+                // Show active events
+                activeEvents.map((event, index) => (
+                  <motion.div
+                    key={`active-${index}`}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                  >
+                    <Card
+                      id={event._id}
+                      title={event.title}
+                      imgPath={event.poster}
+                      btnType="Primary"
+                      description={event.description}
+                      index={index}
+                    />
+                  </motion.div>
+                ))
+              ) : (
+                <EmptyState type="active" />
+              )}
             </div>
           </div>
 
@@ -175,24 +191,34 @@ function Page() {
 
             {/* Past Events Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {pastEvents.map((event, index) => (
-                <motion.div
-                  key={`inactive-${index}`}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.2 }}
-                >
-                  <Card
-                    id={event._id}
-                    title={event.title}
-                    imgPath={event.poster}
-                    btnType="Secondary"
-                    description={event.description}
-                    index={index}
-                  />
-                </motion.div>
-              ))}
+              {loading ? (
+                <>
+                  <LoadingSkeleton />
+                  <LoadingSkeleton />
+                </>
+              ) : pastEvents.length > 0 ? (
+                // Show past events
+                pastEvents.map((event, index) => (
+                  <motion.div
+                    key={`inactive-${index}`}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                  >
+                    <Card
+                      id={event._id}
+                      title={event.title}
+                      imgPath={event.poster}
+                      btnType="Secondary"
+                      description={event.description}
+                      index={index}
+                    />
+                  </motion.div>
+                ))
+              ) : (
+                <EmptyState type="past" />
+              )}
             </div>
           </div>
 
