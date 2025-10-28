@@ -85,14 +85,14 @@ export default function EnhancedLandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card
               title="Active Events"
-              imgPath="https://github.com/user-attachments/assets/d6f26046-313a-437d-b352-9bc2abb629f7"
+              imgPath="https://github.com/user-attachments/assets/5016bd04-0f02-4129-9f6f-8212a8eb1d7d"
               btnType="Primary"
               description="Join our ongoing events and be part of the tech community. Network, learn, and grow with fellow developers."
               index={0}
             />
             <Card
               title="Past Events"
-              imgPath="https://github.com/user-attachments/assets/d6f26046-313a-437d-b352-9bc2abb629f7"
+              imgPath="https://github.com/user-attachments/assets/0996311c-098a-400b-935b-054f5c707b67"
               btnType="Secondary"
               description="Explore our collection of past events, workshops, and tech talks. Relive the moments and catch up on what you missed."
               index={1}
