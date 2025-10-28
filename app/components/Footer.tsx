@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FaGithub, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedin, FaDiscord } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import { AiFillHeart } from "react-icons/ai";
 import { HiCode } from "react-icons/hi";
@@ -20,6 +20,18 @@ function Footer() {
       href: "https://www.instagram.com/oscode_sait/?igsh=MThsNGozdGxjaTVwcw%3D%3D#",
       label: "Instagram",
       color: "hover:text-red-400",
+    },
+    {
+      icon: FaLinkedin,
+      href: "https://www.linkedin.com/in/oscode-sait-109b8a336/",
+      label: "Linkedin",
+      color: "hover:text-blue-600",
+    },
+    {
+      icon: FaDiscord,
+      href: "https://discord.gg/y2MkGmKQU7",
+      label: "Discord",
+      color: "hover:text-indigo-500",
     },
   ];
 
