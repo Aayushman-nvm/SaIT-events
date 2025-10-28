@@ -19,7 +19,7 @@ function Page() {
     socialLink: string;
   };
   const [events, setEvents] = useState<Event[]>([]);
-  const [loading, setLoading] = useState<Boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   async function getPosts() {
     try {
