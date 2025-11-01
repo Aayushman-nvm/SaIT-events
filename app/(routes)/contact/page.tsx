@@ -132,7 +132,7 @@ function ContactsPage() {
           >
             <div className="inline-flex flex-col sm:flex-row items-center gap-2 px-4 sm:px-6 py-3 bg-gray-900/30 border border-gray-700/50 rounded-full text-gray-400 text-xs sm:text-sm backdrop-blur-sm max-w-full">
               <span className="text-center sm:text-left">
-                If the service below doesn't work, feel free to reach out to us at
+                If the service below doesn&apos;t work, feel free to reach out to us at
               </span>
               <a
                 href="mailto:oscodesaittechteam@gmail.com"
