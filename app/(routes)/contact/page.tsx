@@ -9,7 +9,6 @@ import {
   FaEnvelope,
   FaCommentDots,
 } from "react-icons/fa";
-import emailjs from "@emailjs/browser";
 import Background from "../events/component/Background";
 
 function ContactsPage() {
@@ -36,39 +35,43 @@ function ContactsPage() {
     setIsSubmitting(true);
     setError("");
 
+    //removed emailJs and then integrated with Brevo. - Kushal Gowda
     try {
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-
-      if (!serviceId || !templateId || !publicKey) {
-        throw new Error(
-          "EmailJS configuration is missing. Please check your environment variables."
-        );
-      }
-
-      // sending email using email js
-      const result = await emailjs.sendForm(
-        serviceId,
-        templateId,
-        formRef.current!,
-        publicKey
+      
+      // sending email using Brevo Transcation Email API with route api/contact
+      const result = await fetch("/api/contact", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(userData),
+        }  
       );
 
-      console.log("SUCCESS!", result.status, result.text);
+      //gathering results of the request
+      const requestResult = await result.json();
 
-      setIsSubmitting(false);
-      setSubmitted(true);
+      //check if the submission was successful
+      if(requestResult.success) {
 
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setSubmitted(false);
-        setUserData({ email: "", name: "", request: "" });
-      }, 3000);
+        setSubmitted(true);
+        setUserData({email: "", name: "", request: ""});
+        console.log("SUCCESS!", requestResult.status);//log the status
+        setTimeout(() => setSubmitted(false), 3000);//set state to false after three seconds
+
+      } else {
+        
+        throw new Error(requestResult.error || "could not process your request at the moment");
+
+      }
+      
     } catch (err) {
+      
       console.error("FAILED...", err);
       setError("Failed to send message. Please try again.");
+    
+    } finally{
+
       setIsSubmitting(false);
+    
     }
   };
 
@@ -203,7 +206,7 @@ function ContactsPage() {
               />
             </motion.div>
 
-            {/* Message Textarea */}
+            {/* Message/request Textarea */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -215,7 +218,7 @@ function ContactsPage() {
                 <FaCommentDots className="h-4 w-4 sm:h-5 sm:w-5 text-red-500 group-focus-within:text-red-400 transition-colors mt-1" />
               </div>
               <textarea
-                name="message"
+                name="request"
                 value={userData.request}
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, request: e.target.value }))
