@@ -55,8 +55,9 @@ export async function POST(req: NextRequest) {
     
     //using NextResponse for json response from the server
     return NextResponse.json({ success: true, status: 200 });
-  } catch (err: any) {
-    console.error("Email sending failed:", err?.message || err);
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
+    console.error("Email sending failed:", errorMessage);
     return NextResponse.json({ success: false, error: "Internal server error" }, { status: 500 });
   }
 }
