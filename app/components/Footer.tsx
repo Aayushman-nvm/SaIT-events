@@ -38,8 +38,8 @@ function Footer() {
   const quickLinks = [
     { title: "Home", href: "/" },
     { title: "Events", href: "/events" },
-    { title: "Suggestions", href: "/suggestions" },
     { title: "About", href: "/about" },
+    { title: "Contact Us", link: "/contact" },
   ];
 
   const containerVariants = {
