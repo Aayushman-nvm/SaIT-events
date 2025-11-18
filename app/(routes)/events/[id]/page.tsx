@@ -22,12 +22,24 @@ export default async function EventPage({ params }: EventPageProps) {
   const { id } = await params;
   await connectDB();
 
-  const event = await Post.findById(id).lean<Event>();
-  console.log(event);
+  const eventDoc = await Post.findById(id).lean();
+  console.log(eventDoc);
 
-  if (!event) {
+  if (!eventDoc) {
     notFound();
   }
+
+  // Properly serialize the event data for the client component
+  const event: Event = {
+    _id: (eventDoc as any)._id.toString(),
+    title: (eventDoc as any).title,
+    description: (eventDoc as any).description,
+    info: (eventDoc as any).info,
+    poster: (eventDoc as any).poster,
+    status: (eventDoc as any).status,
+    socialLink: (eventDoc as any).socialLink,
+    registrationLink: (eventDoc as any).registrationLink,
+  };
 
   return <EventPageClient event={event} />;
 }
