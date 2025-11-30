@@ -1,6 +1,6 @@
 //admin onboarding page
 "use client";
-import EventForm from '../components/EventForm'
+import EventForm from '../components/ui/EventForm'
 import React from 'react'
 import { motion } from 'framer-motion'
 import { FaUserShield } from 'react-icons/fa'

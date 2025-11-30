@@ -1,4 +1,7 @@
-// middleware.ts
+/**
+ * Next.js middleware for handling authentication and routing.
+ * Protects admin routes and redirects unauthenticated users to login.
+ */
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
