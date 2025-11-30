@@ -1,7 +1,13 @@
+/**
+ * Controller functions for managing event posts.
+ * Includes create, update, delete, and retrieval operations.
+ */
 import Post from "../models/Post";
 import { NextResponse } from 'next/server';
-//create, delete, update post fucntions
-//create
+
+/**
+ * Interface for createPost function parameters.
+ */
 interface createPostProps{
     title:string;
     description:string;
@@ -12,6 +18,9 @@ interface createPostProps{
     socialLink:string;
 }
 
+/**
+ * Creates a new event post and returns all posts.
+ */
 export async function createPost({title, description, info, poster, registrationLink, status, socialLink}:createPostProps) {
     console.log(`title=${title}\n description=${description}\n status=${status}\n imgUrl=${poster}\n socialLink=${socialLink}`);
     try {
@@ -33,10 +42,10 @@ export async function createPost({title, description, info, poster, registration
     }
     return ("received");
 }
-//delete
-//update
 
-//fetching all posts
+/**
+ * Retrieves all event posts from the database.
+ */
 export async function allPosts() {
     console.log("All post hit");
     try {
