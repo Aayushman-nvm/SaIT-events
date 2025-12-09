@@ -1,7 +1,15 @@
+/**
+ * API routes for managing events.
+ * POST: Creates a new event
+ * GET: Retrieves all events
+ */
 import { NextResponse } from "next/server";
 import {createPost, allPosts} from "../controllers/post";
 import connectDB from "../lib/dbConnection";
-// event get post etc routes
+
+/**
+ * POST handler for creating a new event.
+ */
 export async function POST(req:Request) {
     await connectDB();
     const body = await req.json();
@@ -13,10 +21,12 @@ export async function POST(req:Request) {
     } catch (error) {
         console.log(error);
     }
-    //posting events
 }
 
-export async function GET(req: Request) {
+/**
+ * GET handler for retrieving all events.
+ */
+export async function GET() {
     await connectDB(); // Assuming this works as expected
     try {
         const result = await allPosts();
