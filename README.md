@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SaIT Tech Events
+
+### Experience innovation, culture, and creativity — all in one place.
+
+**SaIT Tech Events** is a centralized platform that lists all the tech-related events, workshops, fests, and community-driven programs happening on campus — so you never miss out on a moment of innovation.
+
+🔗 **Live Site:** [saittechevents.vercel.app](https://saittechevents.vercel.app)  
+
+---
+
+## Features
+
+- Centralized event listings  
+- Easy access to registration links  
+- Responsive and clean UI  
+- Built using **Next.js**, **TypeScript**, and **Tailwind CSS**
+
+---
+
+## Tech Stack
+
+- **End-to-end framework:** Next.js  
+- **Styling:** Tailwind CSS  
+- **Language:** TypeScript  
+- **Hosting:** Vercel  
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to run the project locally:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Installation & Setup
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Aayushman-nvm/SaIT-events.git
+   ```
+2. **Navigate into the project**
+   ```bash
+   cd SaIT-events
+   ```
+4. **Install dependencies**
+   ```bash
+   npm install
+   ```
+6. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+Your app should now be running at [**http://localhost:3000**](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
+We follow a strict and organized folder structure to make development and maintenance easier for everyone.  
+We expect contributors to follow the same structure for consistency and clarity.
 
-To learn more about Next.js, take a look at the following resources:
+Check out the [STRUCTURE.md](./STRUCTURE.md) file to see our complete file and folder layout.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Contributions are always welcome!  
+Check out the [CONTRIBUTING.md](./CONTRIBUTING.md) file to learn how to get started.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Code of Conduct
+
+Please read our [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) before contributing to understand what we expect from everyone involved.  
+For communication, and to connect with the team, feel free to reach out on our Discord server:
+
+**Discord:** [Code Surfers.js](https://discord.gg/y2MkGmKQU7)
+
+---
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE.md).
